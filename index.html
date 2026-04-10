@@ -7,288 +7,102 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat&amp;display=swap" rel="stylesheet">
 
 <style>
-  * { box-sizing: border-box; }
-  body { font-family: 'Montserrat'; padding: 0; margin: 0; }
-  .muted-label { color: #777; font-size: 0.9em; margin-bottom: 4px; }
-  .title-label { font-weight: 700; font-size: 1.2em; margin-bottom: 15px; }
+* { box-sizing: border-box; }
+body { font-family: 'Montserrat'; margin: 0; }
 
-   
-  .menu { 
-    background: #fff;
-    padding: 15px 10px;
-    border-bottom: 1px solid #ddd;
-    transition: box-shadow 0.3s ease;
-  }
-  .menu.sticky {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  }
-  .filters-row {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    gap: 15px;
-    flex-wrap: wrap;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  .filter-block {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    min-width: 150px;
-    max-width: 250px;
-  }
+.muted-label { color: #777; font-size: 0.9em; margin-bottom: 4px; }
+.title-label { font-weight: 700; font-size: 1.2em; margin-bottom: 15px; }
 
-   
-  #categoryFilter, #dateFilter {
-    font-family: 'Montserrat';
-    padding: 10px 14px;
-    font-size: 1em;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    background: #fff;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-    cursor: pointer;
-    transition: 0.2s ease;
-    width: 100%;
-  }
-  #categoryFilter:hover, #dateFilter:hover {
-    box-shadow: 0 3px 10px rgba(0,0,0,0.12);
-  }
-  #categoryFilter:focus, #dateFilter:focus {
-    outline: none;
-    border-color: #179495;
-    box-shadow: 0 0 0 3px rgba(23,148,149,0.25);
-  }
+.menu { background: #fff; padding: 15px 10px; border-bottom: 1px solid #ddd; }
+.menu.sticky {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
 
-   
-  .content-wrapper {
-    padding: 10px;
-    padding-top: 20px;
-  }
-  .content-wrapper.with-sticky {
-    padding-top: 100px;
-  }
+.filters-row {
+  display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;
+  max-width: 1200px; margin: 0 auto;
+}
 
-   
-  .cards { 
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 15px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  .card { 
-    border-radius: 8px;
-    padding: 12px;
-    box-shadow: 0 0 5px rgba(0,0,0,0.15);
-    background: white;
-    display: flex;
-    flex-direction: column;
-  }
-  .card p { font-size: 0.95em; margin: 4px 0; }
-  .card img { 
-    border-radius: 6px;
-    width: 100%;
-    height: 240px;
-    object-fit: cover;
-    margin-bottom: 20px;
-  }
-  .button-container { 
-    text-align: center;
-    margin-top: auto;
-    padding-top: 15px;
-  }
-  .card button { 
-    margin-top: 10px;
-    padding: 8px 20px;
-    border: none;
-    background: #179495;
-    color: white;
-    border-radius: 50px;
-    cursor: pointer;
-    font-weight: 400;
-    font-size: 1.2em;
-    font-style: italic;
-    transition: background 0.2s ease;
-  }
-  .card button:hover {
-    background: #137374;
-  }
+.filter-block {
+  display: flex; flex-direction: column;
+  min-width: 150px; max-width: 250px;
+}
 
-   
-  .modal { 
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.7);
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    z-index: 9999;
-  }
-  .modal-content { 
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    max-width: 900px;
-    width: 95%;
-    max-height: 90vh;
-    overflow-y: auto;
-  }
-  .modal-left { flex: 1 1 300px; }
-  .modal-left img { 
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    object-fit: cover;
-  }
-  .modal-right { 
-    flex: 1 1 300px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .modal-right h2 { 
-    margin-top: 0;
-    font-weight: 700;
-    font-size: 1.4em;
-  }
-  .modal-buttons { 
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
-    flex-wrap: wrap;
-  }
-  .modal-buttons a { 
-    padding: 8px 20px;
-    border: none;
-    background: #179495;
-    color: white;
-    border-radius: 50px;
-    cursor: pointer;
-    font-size: 1.2em;
-    font-style: italic;
-    text-decoration: none;
-    transition: background 0.2s ease;
-  }
-  .modal-buttons a:hover {
-    background: #137374;
-  }
-  .close { 
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 28px;
-    font-weight: bold;
-    color: #333;
-    cursor: pointer;
-    background: white;
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
-    line-height: 28px;
-    text-align: center;
-    box-shadow: 0 0 5px rgba(0,0,0,0.2);
-  }
-  .modal-info-row { 
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-    margin-top: 15px;
-    width: 100%;
-  }
-  .modal-info-column { 
-    flex: 1;
-    min-width: 150px;
-  }
+#categoryFilter, #dateFilter {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
 
-   
-  @media (max-width: 768px) {
-    .filter-block {
-      min-width: 120px;
-      max-width: none;
-    }
-    
-    .cards {
-      grid-template-columns: 1fr;
-      padding: 0 10px;
-    }
-    
-    .card {
-      width: 100%;
-    }
-    
-    .card img {
-      height: 280px;
-    }
-    
-    .modal {
-      padding: 0;
-    }
-    
-    .modal-content {
-      border-radius: 0;
-      width: 100%;
-      height: 100%;
-      max-height: none;
-      padding: 15px;
-    }
-    
-    .close {
-      top: 15px;
-      right: 15px;
-      font-size: 30px;
-      z-index: 10;
-    }
-    
-    .modal-left,
-    .modal-right {
-      flex: 1 1 100%;
-    }
-    
-    .modal-info-column {
-      flex: 1 1 100%;
-    }
-  }
+.content-wrapper { padding: 10px; }
+.content-wrapper.with-sticky { padding-top: 100px; }
 
-  @media (max-width: 480px) {
-    .filters-row {
-      gap: 10px;
-    }
-    
-    .filter-block {
-      flex: 1 1 calc(50% - 5px);
-      min-width: 0;
-    }
-    
-    #categoryFilter, #dateFilter {
-      font-size: 0.9em;
-      padding: 8px 10px;
-    }
-    
-    .card button,
-    .modal-buttons a {
-      font-size: 1em;
-      padding: 8px 16px;
-    }
-  }
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 15px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.card {
+  padding: 12px;
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 0 5px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+}
+
+.card img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 15px;
+}
+
+.button-container {
+  margin-top: auto;
+  text-align: center;
+}
+
+.card button {
+  padding: 8px 20px;
+  border: none;
+  background: #179495;
+  color: white;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+ 
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 900px;
+  width: 95%;
+}
+
+.close {
+  float: right;
+  cursor: pointer;
+  font-size: 24px;
+}
 </style>
 </head>
+
 <body>
 
 
@@ -296,18 +110,23 @@
   <div class="filters-row">
 
     <div class="filter-block">
-      <label class="muted-label">Categoria</label>
+      <label>Categoria</label>
       <select id="categoryFilter">
         <option value="">Tutte</option>
                   <option value="Community">Community</option>
+                  <option value="Arte e cultura">Arte e cultura</option>
               </select>
     </div>
 
     <div class="filter-block">
-      <label class="muted-label">Data</label>
+      <label>Data</label>
       <select id="dateFilter">
         <option value="">Tutte</option>
                   <option value="🗓️ Tutti i Lunedì, Martedì, Mercoledì e Venerdì">🗓️ Tutti i Lunedì, Martedì, Mercoledì e Venerdì</option>
+                  <option value="🗓️ Lunedì 30 marzo, 13 e 27 aprile, 11 e 25 maggio, 8, 15 e 22 giugno, 6 e 13 luglio">🗓️ Lunedì 30 marzo, 13 e 27 aprile, 11 e 25 maggio, 8, 15 e 22 giugno, 6 e 13 luglio</option>
+                  <option value="🗓️ da Giovedì 9 aprile">🗓️ da Giovedì 9 aprile</option>
+                  <option value="🗓️ Lunedì 20 aprile 2026">🗓️ Lunedì 20 aprile 2026</option>
+                  <option value="🗓️ Domenica 12 aprile 2026">🗓️ Domenica 12 aprile 2026</option>
               </select>
     </div>
 
@@ -316,12 +135,12 @@
 
 
 <div class="content-wrapper" id="contentWrapper">
-  <div class="cards" id="cardsContainer">
-          <div class="card" 
-           data-category="Community" 
+  <div class="cards">
+          <div class="card"
+           data-category="Community"
            data-date="🗓️ Tutti i Lunedì, Martedì, Mercoledì e Venerdì">
-        
-        <img src="https://raw.githubusercontent.com/hubitaorg-dev/website-images/main/1qKkVYjOoFDj_1LnRaaCgwl2__8gAiLbv.png" alt="">
+
+        <img src="https://raw.githubusercontent.com/hubitaorg-dev/website-images/main/1qKkVYjOoFDj_1LnRaaCgwl2__8gAiLbv.png">
         <div class="muted-label">Community</div>
         <div class="title-label">Coworking</div>
         <p>🗓️ Tutti i Lunedì, Martedì, Mercoledì e Venerdì</p>
@@ -329,8 +148,79 @@
         <p>📍 Via Eugenio colorni, 4 (Sala Living)</p>
 
         <div class="button-container">
-          <button class="open-modal-btn" 
-                  data-row='["Coworking","Community","🗓️ Tutti i Lunedì, Martedì, Mercoledì e Venerdì","⏱️ 10:00 - 13:00","📍 Via Eugenio colorni, 4 (Sala Living)","https://raw.githubusercontent.com/hubitaorg-dev/website-images/main/1qKkVYjOoFDj_1LnRaaCgwl2__8gAiLbv.png","👥 Aperto ad adulti e giovani","💻✨ Il Living apre al coworking!\nIl Living di Merezzate diventa uno spazio aperto a soci Hubita, studenti e smart worker in cerca di un luogo tranquillo e accogliente dove studiare e lavorare.\n\n🕒 Orari di apertura coworking  Lunedì 10:00 - 17:00  Martedì 9:00 - 13:00  Mercoledì 10:00 - 13:00  Venerdì 10:00 - 14:00","",""]'>
+          <button class="open-modal-btn" data-index="0">
+            Partecipa
+          </button>
+        </div>
+
+      </div>
+          <div class="card"
+           data-category="Arte e cultura"
+           data-date="🗓️ Lunedì 30 marzo, 13 e 27 aprile, 11 e 25 maggio, 8, 15 e 22 giugno, 6 e 13 luglio">
+
+        <img src="https://raw.githubusercontent.com/hubitaorg-dev/website-images/main/1sy6vwoPEU3uKwwGBDeNyi0ZVkTSPeryw.png">
+        <div class="muted-label">Arte e cultura</div>
+        <div class="title-label">Il Teatro del Sè</div>
+        <p>🗓️ Lunedì 30 marzo, 13 e 27 aprile, 11 e 25 maggio, 8, 15 e 22 giugno, 6 e 13 luglio</p>
+        <p>⏱️ 20.00 - 22.00</p>
+        <p>📍 Via Eugenio colorni, 4 (Sala Living)</p>
+
+        <div class="button-container">
+          <button class="open-modal-btn" data-index="1">
+            Partecipa
+          </button>
+        </div>
+
+      </div>
+          <div class="card"
+           data-category="Community"
+           data-date="🗓️ da Giovedì 9 aprile">
+
+        <img src="https://raw.githubusercontent.com/hubitaorg-dev/website-images/main/1JI4nZmMIN0AW1pTEfCwK5OlTLLVY4uLH.png">
+        <div class="muted-label">Community</div>
+        <div class="title-label">Caffettinooo?!</div>
+        <p>🗓️ da Giovedì 9 aprile</p>
+        <p>⏱️ 9:30 - 11:30 </p>
+        <p>📍 Via Eugenio colorni, 4 (Sala Living)</p>
+
+        <div class="button-container">
+          <button class="open-modal-btn" data-index="2">
+            Partecipa
+          </button>
+        </div>
+
+      </div>
+          <div class="card"
+           data-category="Community"
+           data-date="🗓️ Lunedì 20 aprile 2026">
+
+        <img src="https://raw.githubusercontent.com/hubitaorg-dev/website-images/main/123eCoU8Ttn4s7xFgJ6BWQU-RVB169yww.png">
+        <div class="muted-label">Community</div>
+        <div class="title-label">Cheers</div>
+        <p>🗓️ Lunedì 20 aprile 2026</p>
+        <p>⏱️ 19.30 - 21.00</p>
+        <p>📍 Via Eugenio colorni, 4 (Sala Living)</p>
+
+        <div class="button-container">
+          <button class="open-modal-btn" data-index="3">
+            Partecipa
+          </button>
+        </div>
+
+      </div>
+          <div class="card"
+           data-category="Community"
+           data-date="🗓️ Domenica 12 aprile 2026">
+
+        <img src="https://raw.githubusercontent.com/hubitaorg-dev/website-images/main/1mUEycOFF7nrhkww-OS0YTanz8silo9Jy.png">
+        <div class="muted-label">Community</div>
+        <div class="title-label">CoRogoredo</div>
+        <p>🗓️ Domenica 12 aprile 2026</p>
+        <p>⏱️ 17:00 - 19:00</p>
+        <p>📍 Via Eugenio colorni, 4 (Sala Living)</p>
+
+        <div class="button-container">
+          <button class="open-modal-btn" data-index="4">
             Partecipa
           </button>
         </div>
@@ -344,46 +234,26 @@
   <div class="modal-content">
     <span class="close" id="modalClose">&times;</span>
 
-    <div class="modal-left">
-      <img id="modalImg" src="">
-    </div>
+    <h2 id="modalTitle"></h2>
+    <p id="modalDesc"></p>
+    <p id="modalQuando"></p>
+    <p id="modalDove"></p>
 
-    <div class="modal-right">
-      <div class="muted-label" id="modalCategory"></div>
-      <h2 id="modalTitle"></h2>
-      <p id="modalDesc"></p>
-    </div>
-
-    <div class="modal-info-row">
-      <div class="modal-info-column">
-        <strong>Quando</strong>
-        <p id="modalQuando1"></p>
-        <p id="modalQuando2"></p>
-      </div>
-
-      <div class="modal-info-column">
-        <strong>Dove</strong>
-        <p id="modalDove"></p>
-      </div>
-
-      <div class="modal-info-column">
-        <strong>Chi partecipa</strong>
-        <p id="modalPartecipanti"></p>
-      </div>
-    </div>
-
-    <div class="modal-buttons" id="modalButtons"></div>
+    <div id="modalButtons"></div>
   </div>
 </div>
 
 <script>
 
+const rows = '[[\x22Coworking\x22,\x22Community\x22,\x22🗓️ Tutti i Lunedì, Martedì, Mercoledì e Venerdì\x22,\x22⏱️ 10:00 - 13:00\x22,\x22📍 Via Eugenio colorni, 4 \(Sala Living\)\x22,\x22https:\/\/raw.githubusercontent.com\/hubitaorg-dev\/website-images\/main\/1qKkVYjOoFDj_1LnRaaCgwl2__8gAiLbv.png\x22,\x22👥 Aperto ad adulti e giovani\x22,\x22💻✨ Il Living apre al coworking!\\nIl Living di Merezzate diventa uno spazio aperto a soci Hubita, studenti e smart worker in cerca di un luogo tranquillo e accogliente dove studiare e lavorare.\\n\\n🕒 Orari di apertura coworking\u2028 Lunedì 10:00 - 17:00\u2028 Martedì 9:00 - 13:00\u2028 Mercoledì 10:00 - 13:00\u2028 Venerdì 10:00 - 14:00\x22,\x22\x22,\x22\x22],[\x22Il Teatro del Sè\x22,\x22Arte e cultura\x22,\x22🗓️ Lunedì 30 marzo, 13 e 27 aprile, 11 e 25 maggio, 8, 15 e 22 giugno, 6 e 13 luglio\x22,\x22⏱️ 20.00 - 22.00\x22,\x22📍 Via Eugenio colorni, 4 \(Sala Living\)\x22,\x22https:\/\/raw.githubusercontent.com\/hubitaorg-dev\/website-images\/main\/1sy6vwoPEU3uKwwGBDeNyi0ZVkTSPeryw.png\x22,\x22👥 Aperto ad adulti\x22,\x22Si tratta di un percorso esperienziale di crescita personale con l’obiettivo di valorizzare sensazioni e percezioni, l\x27ascolto di sè e dell\x27altro, attraverso l’uso delle tecniche teatrali.                                Il laboratorio si propone di:\\n- favorire una maggiore consapevolezza corporea attraverso l’analisi del movimento nello spazio.\\n - approfondire le connessioni mente-corpo, per comprendere e gestire le emozioni, riducendo ansie e potenziando l’equilibrio interiore.\\nIl percorso offre ai partecipanti un’opportunità per migliorare la propria autostima, esplorare nuove forme di espressione e potenziare le proprie capacità relazionali.\x22,\x22\x22,\x22\x22],[\x22Caffettinooo?!\x22,\x22Community\x22,\x22🗓️ da Giovedì 9 aprile\x22,\x22⏱️ 9:30 - 11:30\u2028\x22,\x22📍 Via Eugenio colorni, 4 \(Sala Living\)\x22,\x22https:\/\/raw.githubusercontent.com\/hubitaorg-dev\/website-images\/main\/1JI4nZmMIN0AW1pTEfCwK5OlTLLVY4uLH.png\x22,\x22👥 Aperto ad adulti\x22,\x22☕ Caffettinooo?!\u2028Torna la serie di incontri per mamme e neo-mamme, per condividere insieme esperienze e incertezze.\\n\\nPotremo parlare insieme delle nostre emozioni e paure, senza giudizi e senza timori, nel nostro Living attrezzato a misura di bambino.\\n\\nA facilitare gli incontri sarà presente anche una counselor a indirizzo gestaltico per rispondere alle vostre domande.\\n\\n📅 da Giovedì 9 aprile, 9:30 - 11:30\u2028📍 Living Merezzate, via Colorni 4\\n\\n👉 Per info e iscrizioni: https:\/\/linktr.ee\/hubitamerezzate\x22,\x22\x22,\x22https:\/\/chat.whatsapp.com\/FVfzXfPh6NyL5jJnbGv6gb\x22],[\x22Cheers\x22,\x22Community\x22,\x22🗓️ Lunedì 20 aprile 2026\x22,\x22⏱️ 19.30 - 21.00\x22,\x22📍 Via Eugenio colorni, 4 \(Sala Living\)\x22,\x22https:\/\/raw.githubusercontent.com\/hubitaorg-dev\/website-images\/main\/123eCoU8Ttn4s7xFgJ6BWQU-RVB169yww.png\x22,\x22👥 Aperto ad adulti\x22,\x22 Nuovo incontro di Cheers! \\nTorna la serie di aperitivi in inglese, per imparare tra una chiacchiera e un drink.\\n\\nNel corso della serata una tutor guiderà i momenti di discussione e dialogo che si terranno davanti ad un aperitivo. \\nCon roleplay, dialoghi e creazione di scenari, sarà l’occasione perfetta per socializzare e chiacchierare insieme, imparando l’uno dall’altra.\x22,\x22\x22,\x22\x22],[\x22CoRogoredo\x22,\x22Community\x22,\x22🗓️ Domenica 12 aprile 2026\x22,\x22⏱️ 17:00 - 19:00\x22,\x22📍 Via Eugenio colorni, 4 \(Sala Living\)\x22,\x22https:\/\/raw.githubusercontent.com\/hubitaorg-dev\/website-images\/main\/1mUEycOFF7nrhkww-OS0YTanz8silo9Jy.png\x22,\x22👥 Aperto ad adulti e giovani\x22,\x22🎶​​ CoRogoredo\\n\\nIl coro degli studenti della scuola secondaria Sottocorno “CoRogoredo” si esibirà in un musical al Living, come parte del progetto di HUBITA INSIEME.\\nDirezione e regia del prof. Alessandro Nardin, con la partecipazione della prof.ssa Veronica Arduca\\n\\nL’evento è aperto a tutti, partecipa anche tu!\x22,\x22\x22,\x22\x22]]';
+
+
 const menuBar = document.getElementById('menuBar');
 const contentWrapper = document.getElementById('contentWrapper');
-const menuOffset = menuBar.offsetTop;
+const offset = menuBar.offsetTop;
 
 window.addEventListener('scroll', () => {
-  if (window.pageYOffset > menuOffset) {
+  if (window.pageYOffset > offset) {
     menuBar.classList.add('sticky');
     contentWrapper.classList.add('with-sticky');
   } else {
@@ -394,39 +264,27 @@ window.addEventListener('scroll', () => {
 
 
 function openModal(row) {
-  document.getElementById('modalCategory').textContent = row[1];
   document.getElementById('modalTitle').textContent = row[0];
   document.getElementById('modalDesc').textContent = row[7];
-  document.getElementById('modalImg').src = row[5];
-  document.getElementById('modalQuando1').textContent = row[2];
-  document.getElementById('modalQuando2').textContent = row[3];
+  document.getElementById('modalQuando').textContent = row[2] + " " + row[3];
   document.getElementById('modalDove').textContent = row[4];
-  document.getElementById('modalPartecipanti').textContent = row[6];
 
-  const btnContainer = document.getElementById('modalButtons');
-  btnContainer.innerHTML = '';
-  if (row[9]) btnContainer.innerHTML += `<a href="${row[9]}" target="_blank">Vai al gruppo WhatsApp</a>`;
-  if (row[8]) btnContainer.innerHTML += `<a href="${row[8]}" target="_blank">Iscriviti</a>`;
+  const btns = document.getElementById('modalButtons');
+  btns.innerHTML = '';
+
+  if (row[9]) btns.innerHTML += `<a href="${row[9]}" target="_blank">WhatsApp</a>`;
+  if (row[8]) btns.innerHTML += `<a href="${row[8]}" target="_blank">Iscriviti</a>`;
 
   document.getElementById('modal').style.display = 'flex';
-  document.body.style.overflow = 'hidden';
 }
 
-function closeModal() {
+document.getElementById('modalClose').onclick = () => {
   document.getElementById('modal').style.display = 'none';
-  document.body.style.overflow = '';
-}
-
-document.getElementById('modalClose').onclick = closeModal;
-
-document.getElementById('modal').onclick = (e) => {
-  if (e.target.id === 'modal') closeModal();
 };
 
 document.querySelectorAll('.open-modal-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    const row = JSON.parse(btn.dataset.row);
-    openModal(row);
+    openModal(rows[btn.dataset.index]);
   });
 });
 
@@ -436,10 +294,11 @@ function applyFilters() {
   const date = document.getElementById('dateFilter').value;
 
   document.querySelectorAll('.card').forEach(card => {
-    const matchesCategory = !category || card.dataset.category === category;
-    const matchesDate = !date || card.dataset.date === date;
+    const ok =
+      (!category || card.dataset.category === category) &&
+      (!date || card.dataset.date === date);
 
-    card.style.display = (matchesCategory && matchesDate) ? 'block' : 'none';
+    card.style.display = ok ? 'block' : 'none';
   });
 }
 
